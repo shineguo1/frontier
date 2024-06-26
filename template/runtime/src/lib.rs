@@ -328,10 +328,7 @@ impl<F: FindAuthor<u32>> FindAuthor<H160> for FindAuthorTruncated<F> {
 	where
 		I: 'a + IntoIterator<Item = (ConsensusEngineId, &'a [u8])>,
 	{
-		if let Some(author_index) = F::find_author(digests) {
-			return Some(H160::from_str("8B59c47886C048e3be24d510Dcde5F9958BA01Ce").unwrap());
-		}
-		None
+		Some(H160::from_str("8B59c47886C048e3be24d510Dcde5F9958BA01Ce").unwrap());
 	}
 }
 
