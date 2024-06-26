@@ -14,6 +14,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 use alloc::{boxed::Box, vec, vec::Vec};
 use core::marker::PhantomData;
+use core::str::FromStr;
 use scale_codec::{Decode, Encode};
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
