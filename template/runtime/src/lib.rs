@@ -33,6 +33,7 @@ use sp_runtime::{
 };
 use sp_version::RuntimeVersion;
 // Substrate FRAME
+use frame_system::EnsureRoot;
 #[cfg(feature = "with-paritydb-weights")]
 use frame_support::weights::constants::ParityDbWeight as RuntimeDbWeight;
 #[cfg(feature = "with-rocksdb-weights")]
@@ -282,6 +283,23 @@ impl pallet_timestamp::Config for Runtime {
 	type WeightInfo = ();
 }
 
+
+parameter_types! {
+	pub const MaxWellKnownNodes: u32 = 8;
+	pub const MaxPeerIdLength: u32 = 128;
+}
+
+impl pallet_node_authorization::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type MaxWellKnownNodes = MaxWellKnownNodes;
+	type MaxPeerIdLength = MaxPeerIdLength;
+	type AddOrigin = EnsureRoot<AccountId>;
+	type RemoveOrigin = EnsureRoot<AccountId>;
+	type SwapOrigin = EnsureRoot<AccountId>;
+	type ResetOrigin = EnsureRoot<AccountId>;
+	type WeightInfo = ();
+}
+
 pub const EXISTENTIAL_DEPOSIT: u128 = 0;
 
 impl pallet_balances::Config for Runtime {
@@ -494,6 +512,10 @@ mod runtime {
 
 	#[runtime::pallet_index(11)]
 	pub type ManualSeal = pallet_manual_seal;
+
+	// add this line for node_authorization
+	#[runtime::pallet_index(12)]
+	pub type NodeAuthorization = pallet_node_authorization;
 }
 
 #[derive(Clone)]
